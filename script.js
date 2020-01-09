@@ -1,22 +1,38 @@
-const scripts = [...document.getElementsByTagName("script")],
-    reg = [/jivosite/i, /callback.onlinepbx/i];
+window.onload = () => {
+    const scripts = [...document.getElementsByTagName("script")],
+        reg = [/jivosite/i, /callibri_soc/i],
+        reg0 = /callback.onlinepbx/i;
 
-//remove jdiv
-scripts.forEach(script => {
-    const find = reg.find(elem => elem.test(script.outerHTML))
 
-    if (find != undefined) {
-        const idInterval = setInterval(() => {
-            let jdiv = [...document.getElementsByTagName("jdiv")];
-            if (jdiv.length > 0) {
-                jdiv.forEach(element => {
-                    element.remove();
-                })
-                clearInterval(idInterval);
-            }
-        }, 100)
-    }
-})
+    scripts.forEach(script => {
+        const find = reg.find(elem => elem.test(script.outerHTML));
+        const findPbx = reg0.test(script.outerHTML);
+
+        //remove jdiv
+        if (find != undefined) {
+            const idInterval = setInterval(() => {
+
+                let jdiv = [...document.getElementsByTagName("jdiv")];
+                if (jdiv.length > 0) {
+                    jdiv.forEach(element => {
+                        element.remove();
+
+                    })
+                    clearInterval(idInterval);
+                }
+            }, 100)
+        }
+
+        //remove onlinepbx
+        if (findPbx) {
+            script.outerHTML = "";
+
+        }
+
+    })
+}
+
+
 
 
 // let jdiv = [...document.getElementsByTagName("jdiv")];
